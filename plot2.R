@@ -28,17 +28,18 @@ data <- tbl_df(read.table("./data/household_power_consumption.txt"
                           , stringsAsFactors = FALSE))
 
 # Clean
-data$Date <- dmy(data$Date)
+data$Date <- dmy_hms(paste(data$Date, data$Time))
 data <- filter(data
                , year(Date) == 2007 & month(Date) == 2 & day(Date) <= 2)
 data$Global_active_power <- as.numeric(data$Global_active_power)
 
-# Create Plot
-png(filename = "plot1.png", width = 480, height = 480, units = "px", bg = "transparent")
+# # Create Plot
+png(filename = "plot2.png", width = 480, height = 480, units = "px", bg = "transparent")
 
-hist(data$Global_active_power
-     , main = "Global Active Power"
-     , xlab = "Global Active Power (kilowatts)"
-     , col = "red")
+plot(data$Date, data$Global_active_power
+     , type = "l"
+     , ylab = "Global Active Power (kilowatts)"
+     , xlab = ""
+     )
 
 dev.off()
